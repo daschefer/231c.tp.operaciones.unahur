@@ -10,7 +10,6 @@ Trababajo Practico I - Operaciones
 
 --/ Docker Compose
 
---/ GRUPO 3
 
 Documentacion Oficial: https://docs.docker.com/compose/
 
