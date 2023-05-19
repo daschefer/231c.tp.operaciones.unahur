@@ -9,6 +9,7 @@ Trababajo Practico I - Operaciones
 
 
 --/ Docker Compose
+
 --/ GRUPO 3
 
 Documentacion Oficial: https://docs.docker.com/compose/
@@ -22,6 +23,9 @@ Multi-Container Apps : https://www.youtube.com/watch?v=HG6yIjZapSA
 
 
 Instrucciones Docker
+
 $ docket container
+
 $ docker ps
+
 $ sudo docker compose up
