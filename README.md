@@ -17,14 +17,18 @@ Compose es una herramienta para definir y ejecutar aplicaciones Docker de varios
 Imágenes oficiales de Contenedores: https://hub.docker.com/
 
 MySQL
+
 https://hub.docker.com/_/mysql 
+
 Supported architectures:  amd64, arm64v8
 
 
 Pull: docker pull mysql
 
 WordPress
+
 https://hub.docker.com/_/wordpress
+
 Supported architectures:  amd64, arm32v5, arm32v6, arm32v7, arm64v8, i386, mips64le, ppc64le, s390x
 
 
