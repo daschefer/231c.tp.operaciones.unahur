@@ -1,0 +1,34 @@
+version: "2" 
+# Definir version de compose: Instalada v2.17.3
+services:
+  # servicios define que imagenes se van a instalar Mysql + Wordpress Combo
+  db:
+    image: mysql:8.0
+    # imagen TAG: latest ,8, 8.0 refieren a 8.0.33
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: myrootpwd
+      MYSQL_DATABASE: dockerwpdb
+      MYSQL_USER: dockerwpuser
+      MYSQL_PASSWORD: dockersqlpwd
+      # Definicion de Base se datos
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    # Imagen TAG: latest (php 8 + apache compatible)
+    restart: always
+    # Restart always. Si Cae el contenedor se reinicia
+    ports:
+      - "8000:80"
+      # Verificar proyecto en http://localhost:8000
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: dockerwpuser
+      WORDPRESS_DB_PASSWORD: dockersqlpwd
+      WORDPRESS_DB_NAME: dockerwpdb
+      # Definiciones de WordPress
+    volumes:
+      ["./:/var/www/html"]
+volumes:
+  mysql: {}
