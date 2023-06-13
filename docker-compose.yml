@@ -5,7 +5,7 @@ services:
   db:
     image: mysql:8.0
     # imagen TAG: latest ,8, 8.0 refieren a 8.0.33
-    restart: always
+    restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
     environment:
       MYSQL_ROOT_PASSWORD: myrootpwd
       MYSQL_DATABASE: dockerwpdb
@@ -17,7 +17,7 @@ services:
       - db
     image: wordpress:latest
     # Imagen TAG: latest (php 8 + apache compatible)
-    restart: always
+    restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
     # Restart always. Si Cae el contenedor se reinicia
     ports:
       - "8000:80"
@@ -30,5 +30,18 @@ services:
       # Definiciones de WordPress
     volumes:
       ["./:/var/www/html"]
+
+  phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        restart: unless-stopped
+        ports:
+            - "4283:80"
+        environment:
+            PMA_HOST: db:3306  
+            MYSQL_ROOT_PASSWORD: myrootpwd
+        depends_on:
+            - db
+                
 volumes:
   mysql: {}
