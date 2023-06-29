@@ -1,10 +1,10 @@
 # 231c.tp.operaciones.unahur
-Trababajo Practico I - Operaciones
+# Trababajo Practico I - Operaciones
 
---/ GRUPO 3
+## --/ GRUPO 3
 
-- SCHEFER, DIEGO ALBERTO
-- CORREA, GABRIELA ROXANA
+### - SCHEFER, DIEGO ALBERTO
+### - CORREA, GABRIELA ROXANA
 
 
 --/ Docker Compose
@@ -38,4 +38,3 @@ Instalación Oficial Ubuntu/Mint: https://docs.docker.com/desktop/install/ubuntu
 
 Multi-Container Apps : https://www.youtube.com/watch?v=HG6yIjZapSA
 
-Cursos in Learning: https://www.linkedin.com/learning/docker-esencial/docker-compose
