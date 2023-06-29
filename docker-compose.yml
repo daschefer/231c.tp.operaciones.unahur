@@ -3,8 +3,8 @@ version: "2"
 services:
   # servicios define que imagenes se van a instalar Mysql + Wordpress Combo
   db:
-    image: mysql:6.2.0
-    # imagen TAG:6.2.0 requerida por Proyecto
+    image: mysql:8.0
+    # imagen TAG:8.0 requerida por Proyecto
     restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
     environment:
       MYSQL_ROOT_PASSWORD: myrootpwd
@@ -15,8 +15,8 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:latest
-    # Imagen TAG: latest (php 8 + apache compatible)
+    image: wordpress:6.2-php8.0-apache
+    # Imagen TAG: Requerido 6.2.0 Por Proyecto
     restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
     # Restart always. Si Cae el contenedor se reinicia
     ports:
