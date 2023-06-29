@@ -3,8 +3,8 @@ version: "2"
 services:
   # servicios define que imagenes se van a instalar Mysql + Wordpress Combo
   db:
-    image: mysql:8.0
-    # imagen TAG: latest ,8, 8.0 refieren a 8.0.33
+    image: mysql:6.2.0
+    # imagen TAG:6.2.0 requerida por Proyecto
     restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
     environment:
       MYSQL_ROOT_PASSWORD: myrootpwd
