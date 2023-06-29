@@ -5,7 +5,6 @@ Trababajo Practico I - Operaciones
 
 - SCHEFER, DIEGO ALBERTO
 - CORREA, GABRIELA ROXANA
-- LECOQUE, CRISTALDO OWEN
 
 
 --/ Docker Compose
