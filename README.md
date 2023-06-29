@@ -1,13 +1,27 @@
-# 231c.tp.operaciones.unahur
-# Trababajo Practico I - Operaciones
+## Trababajo Practico I - Operaciones
 
-## --/ GRUPO 3
+### GRUPO 3 | Integrantes:
 
 ### - SCHEFER, DIEGO ALBERTO
 ### - CORREA, GABRIELA ROXANA
 
 
---/ Docker Compose
+### OBJETIVOS:
+
+El siguiente trabajo practico requiere que genere una instancia del sistema Wordpress respaldado por una base de datos MySQL y adicionalmente una instancia de phpmyadmin para verificar la creación de la base de datos en el motor.
+
+### Requerimientos
+
+Armar un despliegue declarativo (con docker-compose) llamado docker-compose.yaml , almacenado en GitHub que contenga todos los elementos Wordpress, MySQL y phpmyadmin interconectados y configurados.
+
+### Wordpress :
+Version 6.2.0 Eric Dolphy Imagen en Docker Hub
+Utilizando MySQL como base de datos
+Configurar todos los parámetros necesarios utilizando variables de entorno.
+
+### Recursos
+
+Docker Compose
 
 Documentacion Oficial: https://docs.docker.com/compose/
 
@@ -37,4 +51,3 @@ Pull: docker pull wordpress
 Instalación Oficial Ubuntu/Mint: https://docs.docker.com/desktop/install/ubuntu/
 
 Multi-Container Apps : https://www.youtube.com/watch?v=HG6yIjZapSA
-
