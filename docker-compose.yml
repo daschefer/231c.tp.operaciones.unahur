@@ -6,6 +6,8 @@ services:
     image: mysql:8.0
     # imagen TAG:8.0 requerida por Proyecto
     restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
+    volumes:
+      - "./var/libdb/mysql/:/var/lib/mysql"  # Crea un directorio de base de datos persistentes y lo monta 
     environment:
       MYSQL_ROOT_PASSWORD: myrootpwd
       MYSQL_DATABASE: dockerwpdb
