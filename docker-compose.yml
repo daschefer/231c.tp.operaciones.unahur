@@ -29,7 +29,8 @@ services:
       WORDPRESS_DB_NAME: dockerwpdb
       # Definiciones de WordPress
     volumes:
-      ["./:/var/www/html"]
+      - "./var/www/html/:/var/www/html"
+      - "./Mis-Temas/ashe/:/var/www/html/wp-content/themes/ashe"  # Monto la carpeta de mi tema
 
   phpmyadmin:
         image: phpmyadmin/phpmyadmin
