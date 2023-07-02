@@ -1,25 +1,31 @@
-version: "2" 
+version: "2"
 # Definir version de compose: Instalada v2.17.3
 services:
   # servicios define que imagenes se van a instalar Mysql + Wordpress Combo
   db:
     image: mysql:8.0
     # imagen TAG:8.0 requerida por Proyecto
-    restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
+    restart: unless-stopped # Se reinicia siempre a menos que se detenga manualmente
     volumes:
-      - "./var/libdb/mysql/:/var/lib/mysql"  # Crea un directorio de base de datos persistentes y lo monta 
+      - "mysql:/var/lib/mysql" # Crea un directorio de base de datos persistentes y lo monta
     environment:
       MYSQL_ROOT_PASSWORD: myrootpwd
       MYSQL_DATABASE: dockerwpdb
       MYSQL_USER: dockerwpuser
       MYSQL_PASSWORD: dockersqlpwd
       # Definicion de Base se datos
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppass"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
   wordpress:
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     image: wordpress:6.2-php8.0-apache
     # Imagen TAG: Requerido 6.2.0 Por Proyecto
-    restart: unless-stopped   # Se reinicia siempre a menos que se detenga manualmente
+    restart: unless-stopped # Se reinicia siempre a menos que se detenga manualmente
     # Restart always. Si Cae el contenedor se reinicia
     ports:
       - "8000:80"
@@ -31,20 +37,20 @@ services:
       WORDPRESS_DB_NAME: dockerwpdb
       # Definiciones de WordPress
     volumes:
-      - "./var/www/html/:/var/www/html"
-      - "./Mis-Temas/ashe/:/var/www/html/wp-content/themes/ashe"  # Monto la carpeta de mi tema
+      - "./Mis-Temas/ashe/:/var/www/html/wp-content/themes/ashe" # Monto la carpeta de mi tema
 
   phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
-        restart: unless-stopped
-        ports:
-            - "4283:80"
-        environment:
-            PMA_HOST: db:3306  
-            MYSQL_ROOT_PASSWORD: myrootpwd
-        depends_on:
-            - db
-                
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "4283:80"
+    environment:
+      PMA_HOST: db:3306
+      MYSQL_ROOT_PASSWORD: myrootpwd
+    depends_on:
+      db:
+        condition: service_healthy
+
 volumes:
   mysql: {}
