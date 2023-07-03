@@ -13,7 +13,7 @@ services:
       MYSQL_DATABASE: dockerwpdb
       MYSQL_USER: dockerwpuser
       MYSQL_PASSWORD: dockersqlpwd
-      # Definicion de Base se datos
+
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppass"]
       interval: 5s
@@ -27,30 +27,59 @@ services:
     # Imagen TAG: Requerido 6.2.0 Por Proyecto
     restart: unless-stopped # Se reinicia siempre a menos que se detenga manualmente
     # Restart always. Si Cae el contenedor se reinicia
-    ports:
-      - "8000:80"
+    expose:
+      - 80
       # Verificar proyecto en http://localhost:8000
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: dockerwpuser
       WORDPRESS_DB_PASSWORD: dockersqlpwd
       WORDPRESS_DB_NAME: dockerwpdb
-      # Definiciones de WordPress
+      WORDPRESS_CONFIG_EXTRA: |
+        define('FORCE_SSL_ADMIN', true);
+        define('WP_SITE_URL', 'https://wp.localdev.me');
+        define('WP_SITEURL', 'https://wp.localdev.me');
+        define('WP_HOME', 'https://wp.localdev.me');
+
     volumes:
-      - "./Mis-Temas/ashe/:/var/www/html/wp-content/themes/ashe" # Monto la carpeta de mi tema
+      - "./config/wordpress/Mis-Temas/ashe/:/var/www/html/wp-content/themes/ashe" # Monto la carpeta de mi tema
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart: unless-stopped
-    ports:
-      - "4283:80"
+    expose:
+      - 80
     environment:
       PMA_HOST: db:3306
       MYSQL_ROOT_PASSWORD: myrootpwd
     depends_on:
       db:
         condition: service_healthy
+  certgen:
+    build:
+      context: ./script-runner
+      dockerfile: ./Dockerfile
+    privileged: true
+    volumes:
+      - certs:/certificates/
+      - ./config/cert-gen/certs.sh:/docker-entrypoint.d/certs.sh
+  nginx:
+    image: nginx:1.24
+    ports:
+      - 443:443
+      # SOLO PASA HACER LA REDIRECCION A HTTPS
+      - 80:80
+    privileged: true
+    volumes:
+      - certs:/etc/ssl/private/:ro
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      certgen:
+        condition: service_completed_successfully
+      wordpress:
+        condition: service_started
 
 volumes:
   mysql: {}
+  certs: {}
